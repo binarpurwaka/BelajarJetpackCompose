@@ -39,7 +39,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.binar.belajarjetpackcompose.ui.theme.BelajarJetpackComposeTheme
-import kotlin.contracts.contract
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
