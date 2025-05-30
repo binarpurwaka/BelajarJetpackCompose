@@ -1,5 +1,6 @@
 package com.binar.belajarjetpackcompose
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,6 +39,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.binar.belajarjetpackcompose.ui.theme.BelajarJetpackComposeTheme
+import kotlin.contracts.contract
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,6 +85,14 @@ fun NameCounterApp() {
                     Text("Klik: $count kali")
                 }
                 Text("Halo, $name! Kamu klik $count kali.")
+                Spacer(modifier = Modifier.width(32.dp))
+                val context = LocalContext.current
+                Button(onClick = {
+                    val intent = Intent(context, SecondActivity::class.java)
+                    context.startActivity(intent)
+                }) {
+                    Text(text = "Pindah Ke Activity 2")
+                }
             }
         }
     )
