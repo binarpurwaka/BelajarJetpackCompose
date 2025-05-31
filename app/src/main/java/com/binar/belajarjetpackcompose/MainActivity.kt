@@ -38,6 +38,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.binar.belajarjetpackcompose.ui.component.ReusableOutlinedTextField
 import com.binar.belajarjetpackcompose.ui.theme.BelajarJetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -70,14 +71,30 @@ fun NameCounterApp() {
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                UserProfileCard(modifier=Modifier, "Binar","Programmer",R.drawable.mrwhite,onClick={
-                    Toast.makeText(context, "Clicked on Binar's profile", Toast.LENGTH_SHORT).show()
-                })
+                UserProfileCard(
+                    modifier = Modifier,
+                    "Binar",
+                    "Programmer",
+                    R.drawable.mrwhite,
+                    onClick = {
+                        Toast.makeText(context, "Clicked on Binar's profile", Toast.LENGTH_SHORT)
+                            .show()
+                    })
                 TextField(
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                     value = name,
                     onValueChange = { name = it },
                     label = { Text("Masukkan Nama") }
+                )
+                ReusableOutlinedTextField(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    label = "Masukkan Bio",
+                    value = name,
+                    onValueChange = { name = it }
                 )
                 Button(
                     onClick = { count++ }) {
