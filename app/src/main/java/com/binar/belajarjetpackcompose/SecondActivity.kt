@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.binar.belajarjetpackcompose.ui.theme.BelajarJetpackComposeTheme
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.style.TextAlign
+import com.binar.belajarjetpackcompose.ui.component.ReusableMultilineTextField
 import com.binar.belajarjetpackcompose.ui.component.ReusableOutlinedTextField
 import com.binar.belajarjetpackcompose.ui.component.ReusableSpinner
 
@@ -72,10 +73,7 @@ fun SecondApp() {
                     value = nama,
                     onValueChange = { nama = it }
                 )
-                ReusableOutlinedTextField(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth(),
+                ReusableMultilineTextField(
                     label = "Alamat",
                     value = alamat,
                     onValueChange = { alamat = it }
