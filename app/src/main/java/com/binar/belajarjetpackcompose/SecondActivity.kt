@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.binar.belajarjetpackcompose.ui.theme.BelajarJetpackComposeTheme
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.text.style.TextAlign
 
 
 class SecondActivity : ComponentActivity() {
@@ -46,8 +46,6 @@ class SecondActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun SecondApp() {
-    //val agamaOptions = listOf("Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Konghucu")
-    //var selectedAgama by remember { mutableStateOf(agamaOptions[0]) }
     var nama by remember { mutableStateOf("") }
     var alamat by remember { mutableStateOf("") }
     var selectedAgama by remember { mutableStateOf("") }
@@ -60,9 +58,9 @@ fun SecondApp() {
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {
                 Text(modifier = Modifier.fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
                     .padding(8.dp),
                     style = typography.headlineMedium,
+                    textAlign = TextAlign.Center,
                     text = "Tambah Data")
                 Spacer(modifier = Modifier.padding(16.dp))
                 ReusableOutlinedTextField(
@@ -137,7 +135,6 @@ fun ReusableSpinner(
             label = { Text(label) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             modifier = Modifier
-                .menuAnchor()
                 .fillMaxWidth()
         )
 
