@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -52,6 +55,8 @@ fun SecondApp() {
     val agamaOptions = stringArrayResource(R.array.agama).toList()
     var selectedJenisKelamin by remember { mutableStateOf("") }
     val jenisKelaminOptions = stringArrayResource(R.array.jeniskelamin).toList()
+    var nohp by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text(text = "Second Activity") }) },
@@ -96,6 +101,33 @@ fun SecondApp() {
                     selectedOption = selectedJenisKelamin,
                     onSelectionChange = { selectedJenisKelamin = it }
                 )
+                ReusableOutlinedTextField(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    label = "No HP",
+                    value = nohp,
+                    onValueChange = {nohp = it}
+                )
+                ReusableOutlinedTextField(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    label = "Email",
+                    value = email,
+                    onValueChange = {email = it}
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Button(
+                    modifier = Modifier
+                        .height(70.dp)
+                        .padding(8.dp)
+                        .fillMaxWidth(),
+                    shape = MaterialTheme.shapes.small,
+                    onClick = {}
+                ) {
+                    Text(text = "Simpan")
+                }
             }
         })
 }

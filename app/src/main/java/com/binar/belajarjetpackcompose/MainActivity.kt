@@ -71,6 +71,12 @@ fun NameCounterApp() {
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                AdvancedUserProfileCard(
+                    modifier = Modifier,
+                    "Binar",
+                    "Programmer",
+                    R.drawable.mrwhite,
+                    onClick = {})
                 ReusableOutlinedTextField(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -93,12 +99,7 @@ fun NameCounterApp() {
                         }
                     },
                 ) { Text(text = "Submit") }
-                AdvancedUserProfileCard(
-                    modifier = Modifier,
-                    "Binar",
-                    "Programmer",
-                    R.drawable.mrwhite,
-                    onClick = {})
+
                 AdvancedUserProfileCard(
                     name = submittedName.ifEmpty { "Mr. White" },
                     profession = "UI/UX Designer",
