@@ -141,6 +141,13 @@ fun NameCounterApp() {
                 }) {
                     Text(text = "Pindah Ke Activity 2")
                 }
+                Spacer(modifier = Modifier.width(32.dp))
+                Button(onClick = {
+                    val intent = Intent(context, ThirdActivity::class.java)
+                    context.startActivity(intent)
+                }) {
+                    Text(text = "Pindah Ke Activity 3")
+                }
             }
         }
     )

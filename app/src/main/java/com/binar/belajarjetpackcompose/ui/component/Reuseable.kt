@@ -1,9 +1,10 @@
 package com.binar.belajarjetpackcompose.ui.component
 
-
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -33,6 +35,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,6 +53,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
+import com.binar.belajarjetpackcompose.dataclass.Game
+import com.binar.belajarjetpackcompose.viewmodel.GameViewModel
 
 @Composable
 fun ReusableOutlinedTextField(
@@ -388,6 +399,125 @@ fun AdvancedUserProfileCard(
 
             // Trailing Content (optional)
             trailingContent?.invoke()
+        }
+    }
+}
+
+@Composable
+fun GameScreen(viewModel: GameViewModel = viewModel(), modifier: Modifier = Modifier) {
+    val games = viewModel.games.collectAsState().value
+
+    LazyColumn(
+        modifier = modifier
+            .padding(8.dp)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(games) { game ->
+            GameCard(game = game)
+        }
+    }
+}
+
+@Composable
+fun GameCard(game: Game) {
+    val uriHandler = LocalUriHandler.current
+    val context = LocalContext.current
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clickable {
+                // Tangani klik: buka link jika tersedia
+                game.link?.let { link ->
+                    try {
+                        uriHandler.openUri(link)
+                    } catch (e: Exception) {
+                        // Optional: Tampilkan pesan error, misal Toast
+                        android.widget.Toast.makeText(
+                            context,
+                            "Gagal membuka link: ${e.message}",
+                            android.widget.Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } ?: run {
+                    // Optional: Tampilkan pesan jika link null
+                    android.widget.Toast.makeText(
+                        context,
+                        "Link tidak tersedia",
+                        android.widget.Toast.LENGTH_SHORT
+                    ).show()
+                }
+            },
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            if (game.image != null) {
+                Image(
+                    painter = rememberAsyncImagePainter(
+                        model = game.image,
+                        placeholder = null,
+                        error = null
+                    ),
+                    contentDescription = game.judul ?: "No title available",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(MaterialTheme.colorScheme.surface)
+                ) {
+                    Text(
+                        text = "No image available",
+                        modifier = Modifier.align(Alignment.Center),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = game.judul ?: "No title available",
+                style = MaterialTheme.typography.titleLarge
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Tahun: ${game.tahun ?: "Unknown"}",
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.Gray
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Genre: ${game.genre ?: "Unknown"}",
+                style = MaterialTheme.typography.labelMedium,
+                color = Color.Gray
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Label: ${game.label ?: "Unknown"}",
+                style = MaterialTheme.typography.labelMedium,
+                color = Color.Gray
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            val devText = buildString {
+                append("Developer: ")
+                if (game.dev?.satu != null) append(game.dev.satu)
+                if (game.dev?.dua != null) append(", ${game.dev.dua}")
+                if (game.dev?.tiga != null) append(", ${game.dev.tiga}")
+                if (isEmpty()) append("Unknown")
+            }
+            Text(
+                text = devText,
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.Gray
+            )
         }
     }
 }
